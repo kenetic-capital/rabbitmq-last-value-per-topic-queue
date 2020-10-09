@@ -7,8 +7,10 @@ Easiest thing to do is to:
 - you should now see the plugin when you do rabbitmq-plugins list and can enable/disable it using that tool
 
 If you need any more info in installing plugins and/or troubleshooting then refer to:
-https://www.rabbitmq.com/plugins.html
-https://www.rabbitmq.com/community-plugins.html
+
+* https://www.rabbitmq.com/plugins.html
+
+* https://www.rabbitmq.com/community-plugins.html
 
 
 
@@ -27,4 +29,5 @@ See test/TEST_PLAN.md
 # Authors
 
 Sergey Loguntsov <loguntsov@gmail.com>
+
 Mark Hingston <mark.hingston@kenetic.capital>
