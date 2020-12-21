@@ -9,7 +9,7 @@ endef
 
 ERLC_OPTS = -W0
 
-DEPS = rabbit_common rabbit amqp_client
+DEPS = rabbit
 TEST_DEPS = rabbitmq_ct_helpers rabbitmq_ct_client_helpers
 
 DEP_EARLY_PLUGINS = rabbit_common/mk/rabbitmq-early-plugin.mk
