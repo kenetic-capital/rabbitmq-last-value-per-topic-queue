@@ -40,10 +40,20 @@ All examples of python's code for usage this queue (and tests) are available in 
 
 # Installation instructions
 
-Easiest thing to do is to:
-- make run-broker from above, check that you see "started with 1 plugins", then stop the process
-- copy plugins/rabbit_topic_last_value_queue-[version].ez in to the plugins directory for your installation (usually /usr/lib/rabbitmq/plugins/)
-- you should now see the plugin when you do rabbitmq-plugins list and can enable/disable it using that tool
+1. Clone the `rabbitmq-server` and build it.
+    ```bash
+    git clone https://github.com/rabbitmq/rabbitmq-server
+    make
+    ```
+2. Clone this repo now under `deps` subdirectory
+    ```
+    cd rabbitmq-server/deps
+    git clone https://github.com/kenetic-capital/rabbitmq-last-value-per-topic-queue.git
+    ```
+3. `make run-broker` (after taking a while) should print this plugin in the list of enabled plugins.
+4. Stop the process. (`^C` and then `a` to abort).
+5. Copy `plugins/rabbit_topic_last_value_queue-[version].ez` in to the plugins directory for your installation (usually `/usr/lib/rabbitmq/plugins/`)
+6. You should now see the plugin when you do `rabbitmq-plugins` list and can enable/disable it using that tool
 
 If you need any more info in installing plugins and/or troubleshooting then refer to:
 
