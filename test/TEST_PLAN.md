@@ -2,7 +2,7 @@
 
 
 ## Basic tests
-You can use the utlilities in the python/ directory of this repo to complete these tests. They use aio_pika
+You can use the utlilities in the python/ directory of this repo to complete these tests. They use `aio_pika`
 
 ### Aim:
 
@@ -15,6 +15,7 @@ Basic tests verifying that:
 
 ### Tests:
 
+```bash
 ./producer.py topic 1 a  # 1 second delay on producing
 ./producer.py topic 2 b  # 2 second delay
 
@@ -24,19 +25,18 @@ Basic tests verifying that:
 ./consumer_tlv.py queue3 topic 5 b     # slow consumer, TLV queue, verify it only prints new values (ie printed timestamps should roughly match)
 ./consumer_tlv.py queue4 topic 5 a     # same as above, different routing key
 ./consumer_tlv.py queue5 topic 0.04 a  # fast consumer, TLV queue, verify it prints ALL values
-
+```
 
 ### Aim:
 
 Test that consumers running faster than the producer receive all of the to up date information in virtually real time (ie no delay)
 
 ### Tests:
-
-./producer.py topic 1 a b c     
-
+```bash
+./producer.py topic 1 a b c
 ./consumer_tlv.py queue1 topic 0.01 a b c
 ./consumer_tlv.py queue2 topic 0.01 a b c
-
+```
 
 
 ### Aim:
@@ -45,24 +45,25 @@ Test that many values on one topic don't cause starvation to another topic, or v
 
 ### Tests:
 
-#### 1
-./producer.py topic 0.01 a      #fast  
-./producer.py topic 1 b      #medium
-./producer.py topic 3 c      #slow
+#### Case: 1
+```bash
+./producer.py topic 0.01 a   # fast  
+./producer.py topic 1 b      # medium
+./producer.py topic 3 c      # slow
 
 ./consumer_tlv.py queue1 topic 5 a b c  # even slower!
+```
 
-
-#### 2
-
+#### Case: 2
+```bash
 ./producer.py topic 0.01 a b c d   # producer goes flat chat producing across lots of topics
 ./consumer_tlv.py queue1 topic 1 a b c d  # consumer fairly slow
-
+```
 Start and stop the producer -- letting the consumer drain the queue and then starting producer again
 
 
-#### 3
-
+#### Case: 3
+```bash
  # producers go flat chat producing across lots of topics
 ./producer.py topic 0.01 a        
 ./producer.py topic 0.01 b
@@ -70,12 +71,13 @@ Start and stop the producer -- letting the consumer drain the queue and then sta
 ./producer.py topic 0.01 d
 
 ./consumer_tlv.py queue1 topic 1 a b c d  # consumer fairly slow
-
+```
 Start and stop individual producers, letting each topic drain from the queue then start the producer again
 
 
 ### Confirm
-Ordering of values delivered / printed at the consumer should be basically round robin delivery of topic values
+Ordering of values delivered / printed at the consumer should be basically round robin delivery of topic values.
+
 Values should always be 'latest' values -- ie the now and received timestamps should be super close
 
 
@@ -86,14 +88,14 @@ Test advanced topic routing features work ok
 
 
 ### Tests
-
+```bash
 ./producer.py topic 0.01 a.1.x a.2.x a.3.y a.3.z 
 ./producer.py topic 1 b.1.x b.3.z b.5.z
 
 ./consumer_tlv.py queue1 topic 1 *.1.* 
-./consumer_tlv.py queue2 topic 5 a.# 
-./consumer_tlv.py queue3 topic 5 \#.z
-
+./consumer_tlv.py queue2 topic 5 'a.#'
+./consumer_tlv.py queue3 topic 5 '#.z'
+```
 
 
 ### Aim:
@@ -106,11 +108,10 @@ Ensure TLV is working with prefetch count higher than 1
 To test different timing conditions and message flows for acks etc there's one test using a normal pika consumer, one using aio_pika
 
 #### Normal pika
-
+```bash
 ./producer.py topic 0.01 a b c d e f g h i j k l m n o p q r
-
 ./prefetch_pika_consumer.py
-
+```
 #### Confirm
 
 Consumer uses prefetch of 10 and processes messages one per second. So after the first 10 print similar timestamps you should expect from there it will print timestamps that stay about 10 seconds in the past
